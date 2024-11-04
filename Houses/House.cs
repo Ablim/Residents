@@ -1,6 +1,6 @@
 namespace Houses;
 
-public class House
+public struct House
 {
     public Color Color { get; set; }
     public Resident Resident { get; set; }

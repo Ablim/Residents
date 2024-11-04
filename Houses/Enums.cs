@@ -2,6 +2,7 @@ namespace Houses;
 
 public enum Color
 {
+    Default = 0,
     Red,
     Green,
     White,
@@ -11,6 +12,7 @@ public enum Color
 
 public enum Resident
 {
+    Default = 0,
     Englishman,
     Spaniard,
     Ukraine,
@@ -20,6 +22,7 @@ public enum Resident
 
 public enum Pet
 {
+    Default = 0,
     Dog,
     Snail,
     Fox,
@@ -29,6 +32,7 @@ public enum Pet
 
 public enum Drink
 {
+    Default = 0,
     Coffee,
     The,
     Milk,
@@ -38,6 +42,7 @@ public enum Drink
 
 public enum Smoke
 {
+    Default = 0,
     OldGold,
     Kool,
     Chesterfield,
