@@ -48,12 +48,17 @@ public class Program
             Console.WriteLine(candidates.Count);
             _second = (_second + 1) % 60;
         }
-        
-        if (properties.Length == 0)
+
+        if (IsCandidate(houses))
         {
-            if (IsCandidate(houses))
+            if (properties.Length == 0)
+            {
                 candidates.Add(houses);
-            
+                return;
+            }
+        }
+        else
+        {
             return;
         }
 
@@ -100,6 +105,50 @@ public class Program
     
     private static bool IsCandidate(House[] houses)
     {
+        for (var i = 0; i < houses.Length; i++)
+        {
+            if (houses[i].Resident == Resident.Englishman && houses[i].Color != Color.Default && houses[i].Color != Color.Red)
+                return false;
+            if (houses[i].Resident != Resident.Englishman && houses[i].Resident != Resident.Default && houses[i].Color == Color.Red)
+                return false;
+            if (houses[i].Resident == Resident.Spaniard && houses[i].Pet != Pet.Default && houses[i].Pet != Pet.Dog)
+                return false;
+            if (houses[i].Resident != Resident.Spaniard && houses[i].Resident != Resident.Default && houses[i].Pet == Pet.Dog)
+                return false;
+            if (houses[i].Color == Color.Green && houses[i].Drink != Drink.Default && houses[i].Drink != Drink.Coffee)
+                return false;
+            if (houses[i].Color != Color.Green && houses[i].Color != Color.Default && houses[i].Drink == Drink.Coffee)
+                return false;
+            if (houses[i].Resident == Resident.Ukraine && houses[i].Drink != Drink.Default && houses[i].Drink != Drink.The)
+                return false;
+            if (houses[i].Resident != Resident.Ukraine && houses[i].Resident != Resident.Default && houses[i].Drink == Drink.The)
+                return false;
+            if (i > 0 && houses[i].Color == Color.Green && houses[i - 1].Color != Color.Default && houses[i - 1].Color != Color.White)
+                return false;
+            if (i < 4 && houses[i].Color == Color.White && houses[i + 1].Color != Color.Default && houses[i + 1].Color != Color.Green)
+                return false;
+            if (houses[i].Smoke == Smoke.OldGold && houses[i].Pet != Pet.Default && houses[i].Pet != Pet.Snail)
+                return false;
+            if (houses[i].Smoke != Smoke.OldGold && houses[i].Smoke != Smoke.Default && houses[i].Pet == Pet.Snail)
+                return false;
+            if (houses[i].Smoke == Smoke.Kool && houses[i].Color != Color.Default && houses[i].Color != Color.Yellow)
+                return false;
+            if (houses[i].Smoke != Smoke.Kool && houses[i].Smoke != Smoke.Default && houses[i].Color == Color.Yellow)
+                return false;
+            if (i == 2 && houses[i].Drink != Drink.Default && houses[i].Drink != Drink.Milk)
+                return false;
+            if (i != 2 && houses[i].Drink == Drink.Milk)
+                return false;
+            if (i == 0 && houses[i].Resident != Resident.Default && houses[i].Resident != Resident.Norwegian)
+                return false;
+            if (i != 0 && houses[i].Resident == Resident.Norwegian)
+                return false;
+            if (i is > 0 and < 4 && houses[i].Smoke == Smoke.Chesterfield 
+                                 && houses[i - 1].Pet != Pet.Default && houses[i - 1].Pet != Pet.Fox 
+                                 && houses[i + 1].Pet != Pet.Default && houses[i + 1].Pet != Pet.Fox)
+                return false;
+        }
+        
         return true;
     }
 }
