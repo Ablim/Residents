@@ -14,10 +14,10 @@ public class Program
             new Property { Type = typeof(Color), Value = Color.Red },
             new Property { Type = typeof(Color), Value = Color.White },
             new Property { Type = typeof(Color), Value = Color.Yellow },
-            new Property { Type = typeof(Resident), Value = Resident.Englishman },
-            new Property { Type = typeof(Resident), Value = Resident.Japanese },
-            new Property { Type = typeof(Resident), Value = Resident.Norwegian },
-            new Property { Type = typeof(Resident), Value = Resident.Spaniard },
+            new Property { Type = typeof(Resident), Value = Resident.England },
+            new Property { Type = typeof(Resident), Value = Resident.Japan },
+            new Property { Type = typeof(Resident), Value = Resident.Norway },
+            new Property { Type = typeof(Resident), Value = Resident.Spain },
             new Property { Type = typeof(Resident), Value = Resident.Ukraine },
             new Property { Type = typeof(Pet), Value = Pet.Dog },
             new Property { Type = typeof(Pet), Value = Pet.Fox },
@@ -39,6 +39,10 @@ public class Program
         var candidates = new List<House[]>();
         Loop(properties, houses, candidates);
         Console.WriteLine(candidates.Count);
+        var waterDrinker = candidates.SelectMany(h => h).FirstOrDefault(h => h.Drink == Drink.Water).Resident;
+        Console.WriteLine($"The water drinker is from {waterDrinker}");
+        var zebraOwner = candidates.SelectMany(h => h).FirstOrDefault(h => h.Pet == Pet.Zebra).Resident;
+        Console.WriteLine($"The zebra owner is from {zebraOwner}");
     }
 
     private static void Loop(Property[] properties, House[] houses, List<House[]> candidates)
@@ -107,79 +111,71 @@ public class Program
     {
         for (var i = 0; i < houses.Length; i++)
         {
-            if (houses[i].Resident == Resident.Englishman && houses[i].Color != Color.Default && houses[i].Color != Color.Red)
+            if (houses[i].Resident == Resident.England && houses[i].Color != Color.Default && houses[i].Color != Color.Red)
                 return false;
-            if (houses[i].Resident != Resident.Englishman && houses[i].Resident != Resident.Default && houses[i].Color == Color.Red)
+            if (houses[i].Color == Color.Red && houses[i].Resident != Resident.England && houses[i].Resident != Resident.Default)
                 return false;
-            if (houses[i].Resident == Resident.Spaniard && houses[i].Pet != Pet.Default && houses[i].Pet != Pet.Dog)
+            if (houses[i].Resident == Resident.Spain && houses[i].Pet != Pet.Default && houses[i].Pet != Pet.Dog)
                 return false;
-            if (houses[i].Resident != Resident.Spaniard && houses[i].Resident != Resident.Default && houses[i].Pet == Pet.Dog)
+            if (houses[i].Pet == Pet.Dog && houses[i].Resident != Resident.Spain && houses[i].Resident != Resident.Default)
                 return false;
-            if (houses[i].Color == Color.Green && houses[i].Drink != Drink.Default && houses[i].Drink != Drink.Coffee)
+            if (houses[i].Color is Color.Green && houses[i].Drink is not (Drink.Coffee or Drink.Default))
                 return false;
-            if (houses[i].Color != Color.Green && houses[i].Color != Color.Default && houses[i].Drink == Drink.Coffee)
+            if (houses[i].Drink is Drink.Coffee && houses[i].Color is not (Color.Green or Color.Default))
                 return false;
-            if (houses[i].Resident == Resident.Ukraine && houses[i].Drink != Drink.Default && houses[i].Drink != Drink.The)
+            if (houses[i].Resident is Resident.Ukraine && houses[i].Drink is not (Drink.The or Drink.Default))
                 return false;
-            if (houses[i].Resident != Resident.Ukraine && houses[i].Resident != Resident.Default && houses[i].Drink == Drink.The)
+            if (houses[i].Drink is Drink.The && houses[i].Resident is not (Resident.Ukraine or Resident.Default))
                 return false;
-            if (i > 0 && houses[i].Color == Color.Green && houses[i - 1].Color != Color.Default && houses[i - 1].Color != Color.White)
+            if (i > 0 && houses[i].Color is Color.Green && houses[i - 1].Color is not (Color.White or Color.Default))
                 return false;
-            if (i == 0 && houses[i].Color == Color.Green)
+            if (i == 0 && houses[i].Color is Color.Green)
                 return false;
-            if (i < 4 && houses[i].Color == Color.White && houses[i + 1].Color != Color.Default && houses[i + 1].Color != Color.Green)
+            if (i < 4 && houses[i].Color is Color.White && houses[i + 1].Color is not (Color.Green or Color.Default))
                 return false;
-            if (i == 4 && houses[i].Color == Color.White)
+            if (i == 4 && houses[i].Color is Color.White)
                 return false;
-            if (houses[i].Smoke == Smoke.OldGold && houses[i].Pet != Pet.Default && houses[i].Pet != Pet.Snail)
+            if (houses[i].Smoke is Smoke.OldGold && houses[i].Pet is not (Pet.Snail or Pet.Default))
                 return false;
-            if (houses[i].Smoke != Smoke.OldGold && houses[i].Smoke != Smoke.Default && houses[i].Pet == Pet.Snail)
+            if (houses[i].Pet is Pet.Snail && houses[i].Smoke is not (Smoke.OldGold or Smoke.Default))
                 return false;
-            if (houses[i].Smoke == Smoke.Kool && houses[i].Color != Color.Default && houses[i].Color != Color.Yellow)
+            if (houses[i].Smoke is Smoke.Kool && houses[i].Color is not (Color.Yellow or Color.Default))
                 return false;
-            if (houses[i].Smoke != Smoke.Kool && houses[i].Smoke != Smoke.Default && houses[i].Color == Color.Yellow)
+            if (houses[i].Color is Color.Yellow && houses[i].Smoke is not (Smoke.Kool or Smoke.Default))
                 return false;
-            if (i == 2 && houses[i].Drink != Drink.Default && houses[i].Drink != Drink.Milk)
+            if (i == 2 && houses[i].Drink is not (Drink.Milk or Drink.Default))
                 return false;
-            if (i != 2 && houses[i].Drink == Drink.Milk)
+            if (i != 2 && houses[i].Drink is Drink.Milk)
                 return false;
-            if (i == 0 && houses[i].Resident != Resident.Default && houses[i].Resident != Resident.Norwegian)
+            if (i == 0 && houses[i].Resident is not (Resident.Norway or Resident.Default))
                 return false;
-            if (i != 0 && houses[i].Resident == Resident.Norwegian)
+            if (i != 0 && houses[i].Resident is Resident.Norway)
                 return false;
-            if (i is > 0 and < 4 && houses[i].Smoke == Smoke.Chesterfield 
-                                 && houses[i - 1].Pet != Pet.Default && houses[i - 1].Pet != Pet.Fox 
-                                 && houses[i + 1].Pet != Pet.Default && houses[i + 1].Pet != Pet.Fox)
+            if (houses[i].Smoke is Smoke.Chesterfield 
+                && !(i > 0 && houses[i - 1].Pet is Pet.Fox or Pet.Default || i < 4 && houses[i + 1].Pet is Pet.Fox or Pet.Default))
                 return false;
-            if (i is > 0 and < 4 && houses[i].Pet == Pet.Fox 
-                                 && houses[i - 1].Smoke != Smoke.Default && houses[i - 1].Smoke != Smoke.Chesterfield 
-                                 && houses[i + 1].Smoke != Smoke.Default && houses[i + 1].Smoke != Smoke.Chesterfield)
+            if (houses[i].Pet is Pet.Fox 
+                && !(i > 0 && houses[i - 1].Smoke is Smoke.Chesterfield or Smoke.Default || i < 4 && houses[i + 1].Smoke is Smoke.Chesterfield or Smoke.Default))
                 return false;
-            if (i is > 0 and < 4 && houses[i].Smoke == Smoke.Kool 
-                                 && houses[i - 1].Pet != Pet.Default && houses[i - 1].Pet != Pet.Horse 
-                                 && houses[i + 1].Pet != Pet.Default && houses[i + 1].Pet != Pet.Horse)
+            if (houses[i].Smoke is Smoke.Kool 
+                && !(i > 0 && houses[i - 1].Pet is Pet.Horse or Pet.Default || i < 4 && houses[i + 1].Pet is Pet.Horse or Pet.Default))
                 return false;
-            if (i is > 0 and < 4 && houses[i].Pet == Pet.Horse 
-                                 && houses[i - 1].Smoke != Smoke.Default && houses[i - 1].Smoke != Smoke.Kool 
-                                 && houses[i + 1].Smoke != Smoke.Default && houses[i + 1].Smoke != Smoke.Kool)
+            if (houses[i].Pet is Pet.Horse 
+                && !(i > 0 && houses[i - 1].Smoke is Smoke.Kool or Smoke.Default || i < 4 && houses[i + 1].Smoke is Smoke.Kool or Smoke.Default))
                 return false;
-            if (houses[i].Smoke == Smoke.LuckyStrike && houses[i].Drink != Drink.Default && houses[i].Drink != Drink.OrangeJuice)
+            if (houses[i].Smoke is Smoke.LuckyStrike && houses[i].Drink is not (Drink.OrangeJuice or Drink.Default))
                 return false;
-            if (houses[i].Smoke != Smoke.LuckyStrike && houses[i].Smoke != Smoke.Default && houses[i].Drink == Drink.OrangeJuice)
+            if (houses[i].Drink is Drink.OrangeJuice && houses[i].Smoke is not (Smoke.LuckyStrike or Smoke.Default))
                 return false;
-            if (houses[i].Smoke == Smoke.Kent && houses[i].Resident != Resident.Default && houses[i].Resident != Resident.Japanese)
+            if (houses[i].Smoke is Smoke.Kent && houses[i].Resident is not (Resident.Japan or Resident.Default))
                 return false;
-            if (houses[i].Smoke != Smoke.Kent && houses[i].Smoke != Smoke.Default && houses[i].Resident == Resident.Japanese)
+            if (houses[i].Resident is Resident.Japan && houses[i].Smoke is not (Smoke.Kent or Smoke.Default))
                 return false;
-            if (i is > 0 and < 4 && houses[i].Resident == Resident.Norwegian
-                                 && houses[i - 1].Color != Color.Default && houses[i - 1].Color != Color.Blue
-                                 && houses[i + 1].Color != Color.Default && houses[i + 1].Color != Color.Blue)
+            if (houses[i].Resident is Resident.Norway
+                && !(i > 0 && houses[i - 1].Color is Color.Blue or Color.Default || i < 4 && houses[i + 1].Color is Color.Blue or Color.Default))
                 return false;
-            if (i is > 0 and < 4 && houses[i].Color == Color.Blue
-                                 && houses[i - 1].Resident != Resident.Default && houses[i - 1].Resident != Resident.Norwegian
-                                 && houses[i + 1].Resident != Resident.Default && houses[i + 1].Resident != Resident.Norwegian)
-                return false;
-            if (houses[i].Resident == Resident.Norwegian && houses[i].Color == Color.Blue)
+            if (houses[i].Color is Color.Blue
+                && !(i > 0 && houses[i - 1].Resident is Resident.Norway or Resident.Default || i < 4 && houses[i + 1].Resident is Resident.Norway or Resident.Default))
                 return false;
         }
         

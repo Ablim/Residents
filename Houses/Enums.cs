@@ -13,11 +13,11 @@ public enum Color
 public enum Resident
 {
     Default = 0,
-    Englishman,
-    Spaniard,
+    England,
+    Spain,
     Ukraine,
-    Norwegian,
-    Japanese
+    Norway,
+    Japan
 }
 
 public enum Pet
