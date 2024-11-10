@@ -111,13 +111,13 @@ public class Program
     {
         for (var i = 0; i < houses.Length; i++)
         {
-            if (houses[i].Resident == Resident.England && houses[i].Color != Color.Default && houses[i].Color != Color.Red)
+            if (houses[i].Resident is Resident.England && houses[i].Color is not (Color.Red or Color.Default))
                 return false;
-            if (houses[i].Color == Color.Red && houses[i].Resident != Resident.England && houses[i].Resident != Resident.Default)
+            if (houses[i].Color is Color.Red && houses[i].Resident is not (Resident.England or Resident.Default))
                 return false;
-            if (houses[i].Resident == Resident.Spain && houses[i].Pet != Pet.Default && houses[i].Pet != Pet.Dog)
+            if (houses[i].Resident is Resident.Spain && houses[i].Pet is not (Pet.Dog or Pet.Default))
                 return false;
-            if (houses[i].Pet == Pet.Dog && houses[i].Resident != Resident.Spain && houses[i].Resident != Resident.Default)
+            if (houses[i].Pet is Pet.Dog && houses[i].Resident is not (Resident.Spain or Resident.Default))
                 return false;
             if (houses[i].Color is Color.Green && houses[i].Drink is not (Drink.Coffee or Drink.Default))
                 return false;
